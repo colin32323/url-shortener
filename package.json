@@ -13,12 +13,12 @@
     "license": "ISC",
     "author": "Colin Charles",
     "type": "module",
-    "main": "src/app.js",
+    "main": "./bin/www",
     "scripts": {
-        "start": "node --watch src/app.js",
-        "dev": "nodemon src/app.js",
-        "format": "prettier --write",
-        "lint": "eslint"
+        "start": "node --watch ./bin/www",
+        "dev": "nodemon ./bin/www",
+        "format": "prettier --write .",
+        "lint": "eslint ."
     },
     "devDependencies": {
         "eslint": "^9.36.0",
@@ -32,8 +32,11 @@
         "cors": "^2.8.5",
         "dotenv": "^17.2.2",
         "express": "^5.1.0",
+        "express-rate-limit": "^8.1.0",
+        "helmet": "^8.1.0",
         "jsonwebtoken": "^9.0.2",
         "mongoose": "^8.18.2",
+        "morgan": "^1.10.1",
         "redis": "^5.8.2"
     }
 }
