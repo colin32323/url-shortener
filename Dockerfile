@@ -17,4 +17,4 @@ COPY . .
 EXPOSE 3000
 
 # Default command
-CMD ["node", "--watch", "./bin/www"]
+CMD ["npm", "run", "dev"]

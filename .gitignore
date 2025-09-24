@@ -139,3 +139,7 @@ dist
 # Vite logs files
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+mongo_data
+redis_data
+logs

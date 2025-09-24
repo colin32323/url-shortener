@@ -29,7 +29,14 @@ export async function redirectToOriginal(req, res) {
     try {
         const { code } = req.params;
         const originalUrl = await getOriginalUrl(code);
-        res.redirect(originalUrl);
+
+        const response = await fetch("https://" + originalUrl);
+
+        if (response.ok) {
+            res.send("Valid URL");
+        } else {
+            res.send("Invalid URL");
+        }
     } catch (err) {
         throw err;
     }

@@ -2,20 +2,21 @@ import express from "express";
 import dotenv from "dotenv/config";
 import morgan from "morgan";
 import { connectDB } from "./config/db.js";
-import urlRoutes from "./routes/url.routes.js";
-import authRoutes from "./routes/auth.routes.js";
+import mainRouter from "./routes.js";
 import { handleError } from "./middlewares/handle-error.js";
 
 const app = express();
 
 app.use(express.json());
 
+// DB connection
+connectDB();
+
 // Morgan HTTP request logging
 app.use(morgan("dev"));
 
 // Routes
-app.use("/api/url", urlRoutes);
-app.use("/api/auth", authRoutes);
+app.use("/api/v1", mainRouter);
 
 // Error handler
 app.use(handleError);
