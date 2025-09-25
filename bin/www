@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import http from "http";
 import app from "../src/app.js";
+import "dotenv/config";
 
 async function startServer() {
     try {
