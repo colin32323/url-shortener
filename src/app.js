@@ -1,5 +1,6 @@
 import express from "express";
 import morgan from "morgan";
+
 import { connectDB } from "./config/db.js";
 import mainRouter from "./routes.js";
 import { handleError } from "./middlewares/handle-error.js";
