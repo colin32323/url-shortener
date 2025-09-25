@@ -2,9 +2,16 @@ import Url from "../models/url-model.js";
 import generateShortCode from "../utils/generate-shortcode.js";
 import redisClient from "../config/redis-client.js";
 import { throwError, ERROR_CODES, AppError } from "../utils/error-codes.js";
+import { isValidUrl } from "../utils/url-validation.js";
 
 export async function shortenUrl(originalUrl, userId) {
     try {
+        if (!isValidUrl(originalUrl)) {
+            throwError(ERROR_CODES.URL.INVALID_URL, {
+                message: "Invalid URL format",
+            });
+        }
+
         let url = await Url.findOne({ originalUrl, user: userId });
         if (url) return url;
 
