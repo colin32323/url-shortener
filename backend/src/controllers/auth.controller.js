@@ -6,9 +6,7 @@ export async function register(req, res) {
         const { token, username } = await registerUser(req.body);
         res.json({ token, username });
     } catch (err) {
-        throw throwError(ERROR_CODES.AUTH.USER_EXISTS, {
-            message: err.message,
-        });
+        throw throwError(ERROR_CODES.AUTH.USER_EXISTS);
     }
 }
 

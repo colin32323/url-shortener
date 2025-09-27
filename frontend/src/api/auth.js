@@ -6,6 +6,7 @@ export async function registerUser(data) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
     });
+    return res.json();
     if (!res.ok) throw new Error("Registration failed");
     return res.json();
 }

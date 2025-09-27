@@ -1,5 +1,6 @@
 import express from "express";
 import morgan from "morgan";
+import cors from "cors";
 
 import { connectDB } from "./config/db.js";
 import mainRouter from "./routes.js";
@@ -13,6 +14,7 @@ app.use(express.urlencoded({ extended: true }));
 // DB connection
 connectDB();
 
+app.use(cors());
 // Morgan HTTP request logging
 app.use(morgan("dev"));
 
