@@ -2,12 +2,19 @@ import { useState } from "react";
 
 export default function UrlForm({ onShorten }) {
     const [url, setUrl] = useState("");
+    const [loading, setLoading] = useState(false);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (!url) return;
-        onShorten(url);
-        setUrl("");
+
+        setLoading(true);
+        try {
+            await onShorten(url); // ✅ calls Home handler
+            setUrl("");
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -20,8 +27,11 @@ export default function UrlForm({ onShorten }) {
                 required
                 className="flex-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400"
             />
-            <button className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition">
-                Shorten
+            <button
+                className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition"
+                disabled={loading}
+            >
+                {loading ? "..." : "Shorten"}
             </button>
         </form>
     );

@@ -6,7 +6,7 @@ export async function register(req, res) {
         const { token, username } = await registerUser(req.body);
         res.json({ token, username });
     } catch (err) {
-        throw throwError(ERROR_CODES.AUTH.USER_EXISTS);
+        throwError(ERROR_CODES.AUTH.USER_EXISTS);
     }
 }
 
@@ -15,7 +15,7 @@ export async function login(req, res) {
         const { token, username } = await loginUser(req.body);
         res.json({ token, username });
     } catch (err) {
-        throw throwError(ERROR_CODES.AUTH.INVALID_CREDENTIALS, {
+        throwError(ERROR_CODES.AUTH.INVALID_CREDENTIALS, {
             message: err.message,
         });
     }

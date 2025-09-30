@@ -28,7 +28,7 @@ function throwError(errorObj, options = {}) {
         errorObj = ERROR_CODES.SERVER.INTERNAL_ERROR;
     }
 
-    return new AppError({
+    throw new AppError({
         code: errorObj.code,
         message: options.message || errorObj.message,
         statusCode: errorObj.statusCode,
@@ -41,7 +41,7 @@ const ERROR_CODES = {
     AUTH: {
         INVALID_CREDENTIALS: {
             code: "AUTH_001",
-            message: "Invalid email or password",
+            message: "Invalid username or password",
             statusCode: 401,
         },
         UNAUTHORIZED: {

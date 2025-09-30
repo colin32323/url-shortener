@@ -1,6 +1,6 @@
 import { urlRoutes } from "../routes.js";
 
-const BACKEND_URL = import.meta.env?.VITE_API_URL || "http://backend:3000";
+const BACKEND_URL = import.meta.env?.VITE_API_URL || "http://localhost:3000";
 
 function getAuthHeader() {
     return {

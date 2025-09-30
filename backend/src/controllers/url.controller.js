@@ -9,7 +9,7 @@ export async function createShortUrl(req, res) {
     try {
         const { originalUrl } = req.body;
         if (!originalUrl) {
-            throw throwError(ERROR_CODES.URL.INVALID_URL, {
+            throwError(ERROR_CODES.URL.INVALID_URL, {
                 message: "You must provide a valid URL",
                 details: { received: originalUrl },
             });
@@ -19,7 +19,7 @@ export async function createShortUrl(req, res) {
         res.json({ shortCode: url.shortCode, originalUrl: url.originalUrl });
     } catch (err) {
         if (err instanceof AppError) throw err;
-        throw throwError(ERROR_CODES.SERVER.INTERNAL_ERROR, {
+        throwError(ERROR_CODES.SERVER.INTERNAL_ERROR, {
             details: err.message,
         });
     }
@@ -30,7 +30,7 @@ export async function redirectToOriginal(req, res) {
         const { code } = req.params;
         const originalUrl = await getOriginalUrl(code);
 
-        const response = await fetch("https://" + originalUrl);
+        const response = await fetch(originalUrl);
 
         if (response.ok) {
             res.send("Valid URL");

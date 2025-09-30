@@ -12,10 +12,6 @@ function generateMongoURL() {
     // Encode password safely for URL
     const encodedPassword = encodeURIComponent(MONGO_PASSWORD);
 
-    console.log(
-        `mongodb://${MONGO_USER_NAME}:${MONGO_PASSWORD}@${MONGO_HOST}:${MONGO_PORT}/${MONGO_DB_NAME}?authSource=admin`,
-    );
-
     return `mongodb://${MONGO_USER_NAME}:${encodedPassword}@${MONGO_HOST}:${MONGO_PORT}/${MONGO_DB_NAME}?authSource=admin`;
 }
 

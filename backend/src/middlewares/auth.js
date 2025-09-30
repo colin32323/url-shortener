@@ -6,19 +6,19 @@ export async function authMiddleware(req, res, next) {
     try {
         const authHeader = req.headers.authorization;
         if (!authHeader || !authHeader.startsWith("Bearer ")) {
-            throw throwError(ERROR_CODES.AUTH.UNAUTHORIZED);
+            throwError(ERROR_CODES.AUTH.UNAUTHORIZED);
         }
 
         const token = authHeader.split(" ")[1];
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         const user = await User.findById(decoded.userId).lean();
-        if (!user) throw throwError(ERROR_CODES.AUTH.UNAUTHORIZED);
+        if (!user) throwError(ERROR_CODES.AUTH.UNAUTHORIZED);
 
         req.user = user;
         next();
     } catch (err) {
         if (err instanceof AppError) throw err;
-        throw throwError(ERROR_CODES.AUTH.UNAUTHORIZED, {
+        throwError(ERROR_CODES.AUTH.UNAUTHORIZED, {
             details: err.message,
         });
     }
