@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 
 export default function UrlPage({ username, token, onLogout }) {
     const [urls, setUrls] = useState([]);
-    const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
     const [isEditing, setIsEditing] = useState(false);
     const navigate = useNavigate();
@@ -32,7 +31,6 @@ export default function UrlPage({ username, token, onLogout }) {
 
     // Handle shortening a new URL
     const handleShorten = async (originalUrl) => {
-        setLoading(true);
         setError("");
         try {
             const newUrl = await shortenUrl(originalUrl, token);
@@ -43,8 +41,6 @@ export default function UrlPage({ username, token, onLogout }) {
             setError(
                 err?.response?.data?.error?.message || "Failed to shorten URL"
             );
-        } finally {
-            setLoading(false);
         }
     };
 
