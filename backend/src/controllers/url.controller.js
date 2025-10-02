@@ -27,15 +27,18 @@ export async function createShortUrl(req, res) {
 
 export async function redirectToOriginal(req, res) {
     try {
+        console.log("in controller");
         const { code } = req.params;
         const originalUrl = await getOriginalUrl(code);
 
         const response = await fetch(originalUrl);
 
         if (response.ok) {
-            res.send("Valid URL");
+            console.log("worked");
+            res.redirect(originalUrl);
         } else {
-            res.send("Invalid URL");
+            console.log("not working");
+            res.status(500).json();
         }
     } catch (err) {
         throw err;
