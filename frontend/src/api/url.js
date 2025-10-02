@@ -35,3 +35,18 @@ export async function checkUrl(shortCode) {
     if (!res.ok) throw new Error("URL not valid");
     return res.json();
 }
+
+export async function deleteUrl(shortCode) {
+    const res = await fetch(
+        `${BACKEND_URL}/${urlRoutes.deleteUrl(shortCode)}`,
+        {
+            method: "DELETE",
+            headers: getAuthHeader(),
+        }
+    );
+    if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData?.error?.message || "Failed to delete URL");
+    }
+    return res.json();
+}

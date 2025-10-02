@@ -8,6 +8,7 @@ export default function UrlPage({ username, token, onLogout }) {
     const [urls, setUrls] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
+    const [isEditing, setIsEditing] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -35,6 +36,7 @@ export default function UrlPage({ username, token, onLogout }) {
         setError("");
         try {
             const newUrl = await shortenUrl(originalUrl, token);
+            if (urls.length === 0) setIsEditing(false);
             setUrls([...urls, newUrl]);
         } catch (err) {
             console.error(err);
@@ -70,7 +72,12 @@ export default function UrlPage({ username, token, onLogout }) {
 
             <div className="w-full max-w-3xl bg-white p-6 rounded-3xl shadow-md">
                 <h2 className="text-2xl font-semibold mb-4">Your URLs</h2>
-                <UrlList urls={urls} />
+                <UrlList
+                    urls={urls}
+                    setUrls={setUrls}
+                    isEditing={isEditing}
+                    setIsEditing={setIsEditing}
+                />
             </div>
         </div>
     );

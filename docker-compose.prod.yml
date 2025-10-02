@@ -1,0 +1,68 @@
+version: "3.9"
+
+services:
+    backend:
+        build:
+            context: ./backend
+            dockerfile: Dockerfile.prod
+        container_name: url-shortener-backend
+        ports:
+            - "3000:3000"
+        env_file:
+            - ./backend/.env
+        restart: unless-stopped
+        command: npm start
+        networks:
+            - app_network
+        depends_on:
+            - mongo
+            - redis
+
+    frontend:
+        build:
+            context: ./frontend
+            dockerfile: Dockerfile.prod
+        container_name: url-shortener-frontend
+        ports:
+            - "80:80" # expose Nginx on 3030, serving React build
+        restart: unless-stopped
+        networks:
+            - app_network
+        depends_on:
+            - backend
+
+    mongo:
+        image: mongo:latest
+        container_name: url-shortener-mongo
+        restart: unless-stopped
+        env_file:
+            - ./backend/.env
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: "admin"
+            MONGO_INITDB_ROOT_PASSWORD: "ccc-admin1204"
+        ports:
+            - "27017:27017"
+        volumes:
+            - mongo_data:/data/db
+        networks:
+            - app_network
+
+    redis:
+        image: redis:7
+        container_name: url-shortener-redis
+        restart: unless-stopped
+        command: redis-server --appendonly yes
+        ports:
+            - "6379:6379"
+        volumes:
+            - redis_data:/data
+        networks:
+            - app_network
+
+volumes:
+    mongo_data:
+    redis_data:
+
+networks:
+    app_network:
+        driver: bridge

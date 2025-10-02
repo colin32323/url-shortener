@@ -7,4 +7,5 @@ export const urlRoutes = {
     shortenUrl: "api/v1/url/shorten",
     redirectUrl: (code) => `api/v1/url/${code}`,
     listUrls: "api/v1/url/user/urls",
+    deleteUrl: (code) => `api/v1/url/${code}`,
 };

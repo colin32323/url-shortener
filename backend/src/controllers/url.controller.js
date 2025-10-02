@@ -2,6 +2,7 @@ import {
     shortenUrl,
     getOriginalUrl,
     getUserUrls,
+    deleteUrl,
 } from "../services/url.service.js";
 import { throwError, ERROR_CODES, AppError } from "../utils/error-codes.js";
 
@@ -27,21 +28,14 @@ export async function createShortUrl(req, res) {
 
 export async function redirectToOriginal(req, res) {
     try {
-        console.log("in controller");
         const { code } = req.params;
         const originalUrl = await getOriginalUrl(code);
-
-        const response = await fetch(originalUrl);
-
-        if (response.ok) {
-            console.log("worked");
-            res.redirect(originalUrl);
-        } else {
-            console.log("not working");
-            res.status(500).json();
-        }
+        res.redirect(originalUrl);
     } catch (err) {
-        throw err;
+        if (err instanceof AppError) throw err;
+        throwError(ERROR_CODES.SERVER.INTERNAL_ERROR, {
+            details: err.message,
+        });
     }
 }
 
@@ -50,6 +44,24 @@ export async function listUserUrls(req, res) {
         const urls = await getUserUrls(req.user._id);
         res.json(urls);
     } catch (err) {
-        throw err;
+        if (err instanceof AppError) throw err;
+        throwError(ERROR_CODES.SERVER.INTERNAL_ERROR, {
+            details: err.message,
+        });
+    }
+}
+
+export async function deleteUserUrl(req, res) {
+    try {
+        const { code } = req.params;
+        const userId = req.user._id;
+
+        const url = await deleteUrl(code, userId);
+        res.json({ url });
+    } catch (error) {
+        if (err instanceof AppError) throw err;
+        throwError(ERROR_CODES.SERVER.INTERNAL_ERROR, {
+            details: err.message,
+        });
     }
 }

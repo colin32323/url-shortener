@@ -28,7 +28,7 @@ export default function UrlForm({ onShorten }) {
                 className="flex-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400"
             />
             <button
-                className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition"
+                className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition min-w-[100px]"
                 disabled={loading}
             >
                 {loading ? "..." : "Shorten"}

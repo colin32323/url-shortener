@@ -60,3 +60,24 @@ export async function getUserUrls(userId) {
         });
     }
 }
+
+export async function deleteUrl(shortCode, userId) {
+    try {
+        const url = await Url.findOne({ shortCode, user: userId });
+        if (!url) return throwError(ERROR_CODES.URL.URL_NOT_FOUND);
+
+        await Url.deleteOne({ _id: url._id });
+
+        // Remove from user's url list
+        await User.findByIdAndUpdate(userId, {
+            $pull: { urls: url.shortCode },
+        });
+
+        return url.originalUrl;
+    } catch (error) {
+        if (err instanceof AppError) throw err;
+        throwError(ERROR_CODES.SERVER.INTERNAL_ERROR, {
+            details: err.message,
+        });
+    }
+}
