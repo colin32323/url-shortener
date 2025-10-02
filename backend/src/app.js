@@ -20,14 +20,7 @@ connectDB();
 
 // Routes
 app.use("/api/v1", mainRouter);
-app.get(
-    "/:code",
-    (_req, _res, next) => {
-        console.log("Hit");
-        next();
-    },
-    redirectToOriginal,
-);
+app.get("/:code", redirectToOriginal);
 
 // Error handler
 app.use(handleError);
