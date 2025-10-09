@@ -1,5 +1,3 @@
-import { parse } from "dotenv";
-
 export function isValidUrl(url) {
     try {
         const normalizedUrl = url.match(/^https?:\/\//)
